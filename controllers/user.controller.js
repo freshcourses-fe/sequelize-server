@@ -94,3 +94,31 @@ module.exports.deleteUser = async (req, res, next) => {
     next(error);
   }
 };
+
+module.exports.updateUserv2 = async (req, res, next) => {
+  try {
+    const { user, body } = req;
+
+    const updatedUser = await user.update(body, {
+      returning: true,
+    });
+
+    updatedUser.password = undefined;
+
+    res.send({ data: updatedUser });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.deleteUserv2 = async (req, res, next) => {
+  try {
+    const { user } = req;
+
+    await user.destroy();
+
+    res.send({ data: user });
+  } catch (error) {
+    next(error);
+  }
+};
