@@ -1,5 +1,6 @@
 'use strict';
 const { Model } = require('sequelize');
+const { isAfter } = require('date-fns');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -17,22 +18,62 @@ module.exports = (sequelize, DataTypes) => {
         field: 'first_name',
         allowNull: false,
         type: DataTypes.STRING(128),
+        validate: {
+          isAlpha: true,
+          notEmpty: true,
+          notNull: true,
+          len: [1, 128],
+        },
       },
       lastName: {
-        field: 'first_name',
+        field: 'last_name',
         allowNull: false,
         type: DataTypes.STRING(128),
+        validate: {
+          isAlpha: true,
+          notEmpty: true,
+          notNull: true,
+          len: [1, 128],
+        },
       },
-      email: { allowNull: false, unique: true, type: DataTypes.TEXT },
-      password: { allowNull: false, type: DataTypes.STRING(256) },
+      email: {
+        allowNull: false,
+        unique: true,
+        type: DataTypes.TEXT,
+        validate: {
+          isEmail: true,
+          notNull: true,
+          notEmpty: true,
+        },
+      },
+      password: {
+        allowNull: false,
+        type: DataTypes.STRING(256),
+        validate: {
+          notEmpty: true,
+          isAlphanumeric: true,
+          notNull: true,
+        },
+      },
       isMale: { field: 'is_male', type: DataTypes.BOOLEAN },
-      birthday: { type: DataTypes.DATEONLY },
+      birthday: {
+        type: DataTypes.DATEONLY,
+        validate: {
+          notEmpty: true,
+          isDate: true,
+          isValidDate: value => {
+            if (isAfter(new Date(value), new Date())) {
+              throw new Error('Bad date');
+            }
+          },
+        },
+      },
     },
     {
       sequelize,
       modelName: 'User',
       underscored: true,
-      tableName: 'users'
+      tableName: 'users',
     }
   );
   return User;
