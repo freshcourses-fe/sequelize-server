@@ -51,3 +51,46 @@ module.exports.findUserById = async (req, res, next) => {
   }
 };
 
+module.exports.updateUser = async (req, res, next) => {
+  try {
+    const {
+      params: { id },
+      body,
+    } = req;
+
+    const [rowsUpdated, [user]] = await User.update(body, {
+      where: { id },
+      returning: true,
+    });
+
+    if (rowsUpdated !== 1) {
+      throw new Error('Cant update user');
+    }
+
+    user.password = undefined;
+
+    res.send({ data: user });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.deleteUser = async (req, res, next) => {
+  try {
+    const {
+      params: { id },
+    } = req;
+
+    const deletedRows = await User.destroy({
+      where: { id },
+    });
+
+    if (deletedRows !== 1) {
+      throw new Error('Cant delete user');
+    }
+
+    res.send({ data: { id } });
+  } catch (error) {
+    next(error);
+  }
+};
