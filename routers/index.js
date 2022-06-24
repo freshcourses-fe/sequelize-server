@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-/* localhost:5000/api */
-router.get('/', (req, res) => {
-  res.send('ok from router');
-});
+const UserController = require('../controllers/user.controller');
+
+
+/* localhost:5000/api/users */
+router.post('/users', UserController.createUser);
 /* localhost:5000/api/users */
 router.get('/users', () => {});
 
