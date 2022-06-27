@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 const { User } = require('../models');
 
 module.exports.createUser = async (req, res, next) => {
@@ -44,6 +45,13 @@ module.exports.findUserById = async (req, res, next) => {
         exclude: ['password'],
       },
     });
+
+    if (!user) {
+      // throw new Error('404. User not found');
+      // throw createError(404, 'User not found');
+      const err = createError(404, 'User not found');
+      return next(err);
+    }
 
     res.send({ data: user });
   } catch (error) {
