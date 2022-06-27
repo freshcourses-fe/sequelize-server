@@ -1,3 +1,5 @@
+const { UniqueConstraintError } = require('sequelize');
+
 module.exports.sequelizeUniqueEH = async (err, req, res, next) => {
   if (err instanceof UniqueConstraintError) {
     return res.status(409).send({ errors: [err] });
