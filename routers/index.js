@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const UserController = require('../controllers/user.controller');
+const OrderController = require('../controllers/order.controller');
 const { findUser } = require('../middlewares/userMW');
 
 /* localhost:5000/api/users */
@@ -19,5 +20,9 @@ router.delete('/users/:id', UserController.deleteUser);
 router.put('/users/v2/:id', findUser, UserController.updateUserv2);
 
 router.delete('/users/v2/:id', findUser, UserController.deleteUserv2);
+
+router.post('/users/:userId/orders', OrderController.createOrder);
+
+router.post('/users/:id/orders/v2', findUser, OrderController.createMagicOrder);
 
 module.exports = router;
