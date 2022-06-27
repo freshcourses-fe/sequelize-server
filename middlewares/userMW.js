@@ -3,10 +3,10 @@ const { User } = require('../models');
 module.exports.findUser = async (req, res, next) => {
   try {
     const {
-      params: { id },
+      params: { userId },
     } = req;
 
-    const user = await User.findByPk(id, {
+    const user = await User.findByPk(userId, {
       attributes: { exclude: ['password'] },
     });
 

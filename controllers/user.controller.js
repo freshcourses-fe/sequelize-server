@@ -37,10 +37,10 @@ module.exports.findUsers = async (req, res, next) => {
 module.exports.findUserById = async (req, res, next) => {
   try {
     const {
-      params: { id },
+      params: { userId },
     } = req;
 
-    const user = await User.findByPk(id, {
+    const user = await User.findByPk(userId, {
       attributes: {
         exclude: ['password'],
       },
@@ -62,12 +62,12 @@ module.exports.findUserById = async (req, res, next) => {
 module.exports.updateUser = async (req, res, next) => {
   try {
     const {
-      params: { id },
+      params: { userId },
       body,
     } = req;
 
     const [rowsUpdated, [user]] = await User.update(body, {
-      where: { id },
+      where: { id: userId },
       returning: true,
     });
 
@@ -86,11 +86,11 @@ module.exports.updateUser = async (req, res, next) => {
 module.exports.deleteUser = async (req, res, next) => {
   try {
     const {
-      params: { id },
+      params: { userId },
     } = req;
 
     const deletedRows = await User.destroy({
-      where: { id },
+      where: { id: userId },
     });
 
     if (deletedRows !== 1) {

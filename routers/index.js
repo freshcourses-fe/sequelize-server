@@ -11,18 +11,18 @@ router.post('/users', UserController.createUser);
 router.get('/users', UserController.findUsers);
 
 /* http://localhost:5000/api/users/5 */
-router.get('/users/:id', UserController.findUserById);
+router.get('/users/:userId', UserController.findUserById);
 
-router.put('/users/:id', UserController.updateUser);
+router.put('/users/:userId', UserController.updateUser);
 
-router.delete('/users/:id', UserController.deleteUser);
+router.delete('/users/:userId', UserController.deleteUser);
 
-router.put('/users/v2/:id', findUser, UserController.updateUserv2);
+router.put('/users/v2/:userId', findUser, UserController.updateUserv2);
 
-router.delete('/users/v2/:id', findUser, UserController.deleteUserv2);
+router.delete('/users/v2/:userId', findUser, UserController.deleteUserv2);
 
 router.post('/users/:userId/orders', OrderController.createOrder);
 
-router.post('/users/:id/orders/v2', findUser, OrderController.createMagicOrder);
+router.post('/users/:userId/orders/v2', findUser, OrderController.createMagicOrder);
 
 module.exports = router;
