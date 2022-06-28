@@ -21,6 +21,7 @@ userRouter.put('/v2/:userId', findUser, UserController.updateUserv2);
 
 userRouter.delete('/v2/:userId', findUser, UserController.deleteUserv2);
 
+/* localhost:5000/api/users/X/orders */
 userRouter.use('/:userId/orders', findUser, orderRouter);
 
 module.exports = userRouter;

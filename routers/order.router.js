@@ -3,6 +3,7 @@ const OrderController = require('../controllers/order.controller');
 
 const orderRouter = express.Router();
 
+/* localhost:5000/api/users/X/orders */
 orderRouter.post('/', OrderController.createOrder);
 
 orderRouter.post('/v2', OrderController.createMagicOrder);
