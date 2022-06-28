@@ -21,7 +21,6 @@ module.exports.findUsers = async (req, res, next) => {
       attributes: {
         exclude: ['password'],
       },
-      where: { firstName: 'Test' },
     });
 
     // const users = await User.findAll({

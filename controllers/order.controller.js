@@ -4,7 +4,7 @@ const { Order } = require('../models');
 module.exports.createOrder = async (req, res, next) => {
   try {
     const {
-      params: { userId },
+      user: { id: userId },
     } = req;
 
     const order = await Order.create({ userId });
@@ -30,7 +30,7 @@ module.exports.createMagicOrder = async (req, res, next) => {
 module.exports.getOrders = async (req, res, next) => {
   try {
     const {
-      params: { userId },
+      user: { id: userId },
     } = req;
     const orders = await Order.findAll({ where: { userId } });
 
@@ -62,7 +62,8 @@ module.exports.getMagicOrders = async (req, res, next) => {
 module.exports.getOrder = async (req, res, next) => {
   try {
     const {
-      params: { userId, orderId },
+      params: { orderId },
+      user: { id: userId },
     } = req;
 
     const order = await Order.findOne({ where: { id: orderId, userId } });
@@ -102,10 +103,13 @@ module.exports.updateOrder = async (req, res, next) => {
 module.exports.deleteOrder = async (req, res, next) => {
   try {
     const {
-      params: { orderId, userId },
+      params: { orderId },
+      user: { id: userId },
     } = req;
 
-    const deletedCount = await Order.destroy({ where: { id: orderId, userId } });
+    const deletedCount = await Order.destroy({
+      where: { id: orderId, userId },
+    });
 
     if (deletedCount !== 1) {
       return next(createHttpError(404, 'Order not found'));
