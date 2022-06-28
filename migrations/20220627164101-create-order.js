@@ -17,9 +17,9 @@ module.exports = {
             tableName: 'users',
           },
           key: 'id',
-          onDelete: 'cascade',
-          onUpdate: 'cascade',
         },
+        onDelete: 'cascade',
+        onUpdate: 'cascade',
       },
       createdAt: {
         field: 'created_at',
