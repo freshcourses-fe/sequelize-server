@@ -1,20 +1,9 @@
 const chatRouter = require('express').Router();
-const multer = require('multer');
 
 const ChatController = require('../controllers/chat.controller');
 const { findUser } = require('../middlewares/userMW');
-const { imagePath } = require('../constants');
+const imageUpload = require('../utils/imagesUpload');
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, imagePath);
-  },
-  filename: function (req, file, cb) {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});
-
-const imageUpload = multer({ storage });
 /* localhost:5000/api/chats */
 
 chatRouter.post('/', ChatController.createChat);
