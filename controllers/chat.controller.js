@@ -25,7 +25,18 @@ module.exports.createChat = async (req, res, next) => {
 
 module.exports.getChats = async (req, res, next) => {
   try {
-    const chats = await Chat.findAll({include: 'participants'});
+    const chats = await Chat.findAll({
+      include: [
+        {
+          model: User,
+          as: 'participants',
+          attributes: ['email', 'id', 'firstName', 'lastName'],
+          through: {
+            attributes: [],
+          },
+        },
+      ],
+    });
 
     if (!chats) {
       return next(createHttpError(404, 'Chats not found'));
@@ -72,7 +83,7 @@ module.exports.addUserToChat = async (req, res, next) => {
       return next(createHttpError(404, 'Chats not found'));
     }
 
-    await chat.addUser(user);
+    await chat.addParticipant(user);
 
     res.send({ message: 'ok' });
   } catch (error) {
