@@ -1,5 +1,5 @@
 const createHttpError = require('http-errors');
-const { Chat, User } = require('../models');
+const { Chat, User } = require('../db/models');
 
 module.exports.createChat = async (req, res, next) => {
   try {

@@ -1,5 +1,5 @@
 const createHttpError = require('http-errors');
-const { Order } = require('../models');
+const { Order } = require('../db/models');
 
 module.exports.createOrder = async (req, res, next) => {
   try {
