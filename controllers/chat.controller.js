@@ -15,7 +15,7 @@ module.exports.createChat = async (req, res, next) => {
       return next(createHttpError(404, 'user not found'));
     }
 
-    await chat.addUser(user);
+    await chat.addParticipant(user);
 
     res.status(201).send({ data: chat });
   } catch (error) {
@@ -90,3 +90,36 @@ module.exports.addUserToChat = async (req, res, next) => {
     next(error);
   }
 };
+
+module.exports.addImage = async (req, res, next) => {
+  try {
+    const {
+      file: { filename },
+      params: { chatId },
+    } = req;
+
+
+    const [updatedCount, [chat]] = await Chat.update(
+      { imagePath: filename },
+      { where: { id: chatId }, returning: true }
+    );
+
+    if (updatedCount !== 1) {
+      return next(createHttpError(404, 'Chats not found'));
+    }
+
+    res.send({ data: chat });
+  } catch (error) {
+    next(error);
+  }
+};
+    /*
+      "fieldname": "image",
+  "originalname": "FRESHCODE - logo.png",
+  "encoding": "7bit",
+  "mimetype": "image/png",
+  "destination": "/home/work/Documents/fc/fe2021-2/lections/sequelize-server/public/images",
+  "filename": "2739f02444d427838c1f38d6dffcd07f",
+  "path": "/home/work/Documents/fc/fe2021-2/lections/sequelize-server/public/images/2739f02444d427838c1f38d6dffcd07f",
+  "size": 5241
+    */

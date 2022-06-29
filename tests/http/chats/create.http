@@ -2,7 +2,7 @@ POST http://localhost:5000/api/chats
 Content-Type: application/json
 
 {
-  "title": "Adminka 2",
+  "title": "Adminka",
   "description" : "For admins only but newer",
-  "userId" : 11
+  "userId" : 1
 }

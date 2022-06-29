@@ -4,3 +4,4 @@
 !.*rc*
 node_modules/
 sequelize-*.json
+/public
