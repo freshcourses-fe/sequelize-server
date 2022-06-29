@@ -25,7 +25,7 @@ module.exports.createChat = async (req, res, next) => {
 
 module.exports.getChats = async (req, res, next) => {
   try {
-    const chats = await Chat.findAll();
+    const chats = await Chat.findAll({include: 'participants'});
 
     if (!chats) {
       return next(createHttpError(404, 'Chats not found'));
