@@ -3,3 +3,4 @@
 !.env.example
 !.*rc*
 node_modules/
+sequelize-*.json
