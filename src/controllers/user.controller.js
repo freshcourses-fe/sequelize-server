@@ -17,6 +17,7 @@ module.exports.createUser = async (req, res, next) => {
 
 module.exports.findUsers = async (req, res, next) => {
   try {
+    const { query: {limit, offset}} =req;
     const users = await User.findAll({
       attributes: {
         exclude: ['password'],
@@ -27,7 +28,7 @@ module.exports.findUsers = async (req, res, next) => {
     //   attributes: ['email', 'firstName', 'lastName']
     // });
 
-    res.send({ data: users });
+    res.send({ data: users, limit, offset });
   } catch (error) {
     next(error);
   }
